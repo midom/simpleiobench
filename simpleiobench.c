@@ -65,7 +65,6 @@ static GOptionEntry entries[] = {
 /* Statistics */
 gint ops = 0;
 int fd;
-char *data;
 
 double inline microtime() {
   struct timeval tv;
@@ -76,6 +75,11 @@ double inline microtime() {
 void *worker(void *x) {
   unsigned ctx = (unsigned)pthread_self();
   ssize_t r;
+
+  char *data = (char *)malloc(blocksize + align);
+  data += align - ((unsigned long)data % align);
+
+
   for (;;) {
     off_t offset = (rand_r(&ctx) * blocksize) % arenasize;
     *data = rand_r(&ctx);
@@ -131,9 +135,6 @@ int main(int ac, char **av) {
     fprintf(stderr, "Couldn't open the file or device: %s\n", strerror(errno));
     exit(1);
   }
-
-  data = (char *)malloc(blocksize + align);
-  data += align - ((unsigned long)data % align);
 
   threads = (pthread_t *)malloc(sizeof(pthread_t) * numthreads);
   for (i = numthreads; numthreads--;) {
