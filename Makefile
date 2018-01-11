@@ -1,5 +1,5 @@
-CFLAGS=`pkg-config glib-2.0 gthread-2.0 --cflags` -Wall -std=c99
-LDLIBS=`pkg-config glib-2.0 gthread-2.0 --libs`
+CFLAGS+=`pkg-config glib-2.0 gthread-2.0 --cflags` -Wall -std=c99
+LDLIBS+=`pkg-config glib-2.0 gthread-2.0 --libs`
 
 all: simpleiobench
 
