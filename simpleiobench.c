@@ -149,6 +149,7 @@ int main(int ac, char **av) {
       printf("%d\n", ops / interval);
     }
     g_atomic_int_set(&ops, 0);
+    fflush(stdout);
   }
   return 0;
 }
